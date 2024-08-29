@@ -1,0 +1,25 @@
+services:
+  api:
+    image: go-api
+    build: .
+    ports:
+      - 8000:8000
+    depends_on:
+      - pg
+
+  pg:
+    image: postgres:16.0-alpine3.18
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: postgres@email.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - 4500:80
+    depends_on:
+      - pg
